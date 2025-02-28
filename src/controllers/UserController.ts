@@ -160,7 +160,7 @@ export class UserController {
 
   updateStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params.
+      const { id } = req.params
 
       const userInDB = await this.userRespository.findOneBy({
         id: parseInt(id)
