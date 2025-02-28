@@ -7,8 +7,8 @@ import { AppDataSource } from "./data-source";
 import cors from "cors";
 
 import userRouter from "./routes/user.routes";
-import driverRouter from "./routes/driver.routes";
-import branchRouter from "./routes/branch.routes";
+import driverRouter from "./routes/products.routes";
+import branchRouter from "./routes/movements.routes";
 
 import { handleError } from "./middlewares/handleError";
 
