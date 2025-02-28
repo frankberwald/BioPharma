@@ -14,6 +14,7 @@ import { handleError } from "./middlewares/handleError";
 
 import authRouter from "./routes/auth.routes";
 import logger from "./config/winston";
+import { verifyToken } from "./middlewares/auth";
 
 const app = express();
 
