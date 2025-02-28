@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm"
 import { User } from "./Users";
 
-@Entity("users")
+@Entity("drivers")
 export class Drivers {
   @PrimaryGeneratedColumn()
   id: number
@@ -9,8 +9,8 @@ export class Drivers {
   @Column({ type: "varchar", length: "255", nullable: false })
   name: string
 
-  @Column({ type: "uuid", nullable: false })
-  user_id: string
+  @Column({ type: "int", nullable: false })
+  user_id: number
 
   @ManyToOne(() => User, (user) => user.drivers, { onDelete: "CASCADE" })
   user: User;

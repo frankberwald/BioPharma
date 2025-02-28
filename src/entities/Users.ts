@@ -16,7 +16,7 @@ export class User {
   @Column({ type: "varchar", length: "255", nullable: false })
   name: string
 
-  @Column({ type: "enum", nullable: false, enum: UserProfile })
+  @Column({ type: "enum", enum: UserProfile })
   profile: UserProfile
 
   @Column({ type: "varchar", length: "150", nullable: false, unique: true })

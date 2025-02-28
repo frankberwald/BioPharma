@@ -3,7 +3,7 @@ import { User } from "./Users"
 
 @Entity("branch")
 export class Branch {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: number
 
   @Column({ type: "varchar", length: "255", nullable: false })
@@ -12,8 +12,8 @@ export class Branch {
   @Column({ type: "varchar", length: "30", nullable: false })
   document: string
 
-  @Column({ type: "uuid", nullable: false })
-  user_id: string
+  @Column({ type: "int", nullable: false })
+  userId: number
 
   @ManyToOne(() => User, (user) => user.branches, { onDelete: "CASCADE" })
   user: User;
