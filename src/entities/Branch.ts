@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from "typeorm"
 import { User } from "./Users"
+import { Product } from "./Products"
 
 @Entity("branch")
 export class Branch {
@@ -17,6 +18,9 @@ export class Branch {
 
   @ManyToOne(() => User, (user) => user.branches, { onDelete: "CASCADE" })
   user: User;
+
+  @OneToMany(() => Product, (product) => product.branch)
+  products: Product[];
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date
