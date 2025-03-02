@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from "typeorm"
 import { User } from "./Users"
 import { Product } from "./Products"
+import { Movements } from "./Movements"
 
 @Entity("branch")
 export class Branch {
@@ -21,6 +22,9 @@ export class Branch {
 
   @OneToMany(() => Product, (product) => product.branch)
   products: Product[];
+
+  @OneToMany(() => Movements, (movement) => movement.product)
+  movements: Movements[];
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date
