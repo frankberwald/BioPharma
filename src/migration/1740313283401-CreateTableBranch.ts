@@ -12,7 +12,7 @@ export class CreateTableBranch1740313283401 implements MigrationInterface {
                         type: "uuid",
                         isPrimary: true,
                         isGenerated: true,
-                        generationStrategy: "increment"
+                        generationStrategy: "uuid"
                     },
                     {
                         name: "full_address",

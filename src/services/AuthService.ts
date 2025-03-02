@@ -47,6 +47,7 @@ class AuthService {
       profile: user.profile,
       token,
     };
+
   }
 }
 
