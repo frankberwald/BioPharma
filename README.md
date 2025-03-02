@@ -1,5 +1,7 @@
 # BioPharma API  (README ESTÁ EM REVISÃO )
 
+# DESENVOLVIDO POR github.com/frankberwald
+
 BioPharma é uma API desenvolvida em **Node.js** utilizando **Express**, **JWT**, **bcrypt** e **TypeORM** para gerenciamento de usuários, produtos e movimentações entre filiais.
 
 ## 📌 Tecnologias Utilizadas
