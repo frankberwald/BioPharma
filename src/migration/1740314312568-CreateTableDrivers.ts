@@ -9,10 +9,10 @@ export class CreateTableDrivers1740314312568 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
+                        type: "int",
                         isPrimary: true,
                         isGenerated: true,
-                        generationStrategy: "increment"
+                        generationStrategy: "uuid"
                     },
                     {
                         name: "full_address",

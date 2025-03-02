@@ -12,7 +12,7 @@ export class CreateTableMovements1740924675100 implements MigrationInterface {
                         type: "uuid",
                         isPrimary: true,
                         isGenerated: true,
-                        generationStrategy: "increment"
+                        generationStrategy: "uuid"
                     },
                     {
                         name: "quantity",
