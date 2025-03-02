@@ -9,7 +9,7 @@ export class CreateTableProducts1740781191772 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "int",
+                        type: "uuid",
                         isPrimary: true,
                         isGenerated: true,
                         generationStrategy: "increment"

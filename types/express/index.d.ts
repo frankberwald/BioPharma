@@ -8,3 +8,11 @@ export interface AuthRequest extends Request {
     profile: UserProfile;
   };
 }
+declare global {
+  namespace Express {
+    interface Request {
+      userId?: string;
+      profile?: string;
+    }
+  }
+}

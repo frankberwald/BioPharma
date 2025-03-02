@@ -19,6 +19,7 @@ export class UserController {
   constructor() {
     this.userRespository = AppDataSource.getRepository(User)
     this.driverRepository = AppDataSource.getRepository(Drivers)
+    this.branchRepository = AppDataSource.getRepository(Branch)
   }
 
   createUser = async (req: Request, res: Response) => {
@@ -33,14 +34,16 @@ export class UserController {
       })
 
       if (userBody.profile == UserProfile.DRIVER) {
-        this.driverRepository.save({
+        await this.driverRepository.save({
           user_id: user.id,
-          document: userBody.document
+          document: userBody.document,
+          name: userBody.name
         })
       } else if (userBody.profile == UserProfile.BRANCH) {
-        this.branchRepository.save({
+        await this.branchRepository.save({
           user_id: user.id,
-          full_address: userBody.full_address
+          full_address: userBody.full_address,
+          document: userBody.document
         })
       }
       res.status(201).json({ message: "Usuário criado com sucesso", user });

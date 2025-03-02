@@ -1,38 +1,29 @@
-import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import AppError from "../utils/AppError";
-
-type dataJwt = JwtPayload & { userId: string, profile: string };
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 
 export interface AuthRequest extends Request {
   userId: string;
   profile: string;
 }
 
-export
-  const verifyToken = (
-    req: Request & { userId: string, profile: string },
-    _res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const token = req.headers.authorization?.split(" ")[1] ?? "";
+// Middleware to verify the token
+export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.header("Authorization")?.replace("Bearer ", "");
 
-      if (!token) {
-        throw new AppError("Token não informado", 401);
-      }
+  if (!token) {
+    return res.status(401).json({ message: "Acesso não autorizado: Token não fornecido" });
+  }
 
-      const data = jwt.verify(token, process.env.JWT_SECRET ?? "") as dataJwt
+  try {
+    // Verify the token using the secret
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as { userId: string, profile: string };
 
-      req.userId = data.userId
-      req.profile = data.profile
+    // Attach user information to the request object
+    (req as AuthRequest).userId = decoded.userId;
+    (req as AuthRequest).profile = decoded.profile;
 
-      next();
-    } catch (error) {
-      if (error instanceof Error) {
-        next(new AppError(error.message, 401));
-      } else {
-        next(new AppError("Unknown error", 401));
-      }
-    }
-  };
+    next(); // Continue to the next middleware or route handler
+  } catch (error) {
+    return res.status(401).json({ message: "Acesso não autorizado: Token inválido" });
+  }
+};
