@@ -13,14 +13,6 @@ export class Movements {
   @PrimaryGeneratedColumn("uuid")
   id: number;
 
-  // @ManyToOne(() => Branch, (branch) => branch.movements, { onDelete: "CASCADE" })
-  // @JoinColumn({ name: "destination_branch_id" })
-  // destinationBranch: Branch;
-
-  // @ManyToOne(() => Product, (product) => product.movements, { onDelete: "CASCADE" })
-  // @JoinColumn({ name: "product_id" })
-  // product: Product;
-
   @ManyToOne(() => Branch, { eager: true })
   @JoinColumn({ name: "destination_branch_id" })
   destinationBranch: Branch;
