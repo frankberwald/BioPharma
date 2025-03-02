@@ -10,7 +10,7 @@ export enum MovementStatus {
 
 @Entity("movements")
 export class Movements {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: number;
 
   // @ManyToOne(() => Branch, (branch) => branch.movements, { onDelete: "CASCADE" })
@@ -22,11 +22,11 @@ export class Movements {
   // product: Product;
 
   @ManyToOne(() => Branch, { eager: true })
-  @JoinColumn({ name: "destinationBranch" })
+  @JoinColumn({ name: "destination_branch_id" })
   destinationBranch: Branch;
 
   @ManyToOne(() => Product, { eager: true })
-  @JoinColumn({ name: "product" })
+  @JoinColumn({ name: "product_id" })
   product: Product;
 
   @Column({ type: "int" })

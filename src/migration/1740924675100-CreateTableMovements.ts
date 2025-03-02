@@ -9,7 +9,7 @@ export class CreateTableMovements1740924675100 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "int",
+                        type: "uuid",
                         isPrimary: true,
                         isGenerated: true,
                         generationStrategy: "increment"
@@ -21,12 +21,12 @@ export class CreateTableMovements1740924675100 implements MigrationInterface {
                     },
                     {
                         name: "destination_branch_id",
-                        type: "int",
+                        type: "uuid",
                         isNullable: false
                     },
                     {
                         name: "product_id",
-                        type: "int",
+                        type: "uuid",
                         isNullable: false
                     },
                     {

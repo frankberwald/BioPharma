@@ -21,10 +21,10 @@ export class AuthController {
   login = async (req: Request, res: Response) => {
     try {
       let userBody = req.body as {
-        name: string,
+        email: string,
         password: string
       }
-      const userEntity = await this.userRespository.findOneBy({ name: userBody.name })
+      const userEntity = await this.userRespository.findOneBy({ name: userBody.email })
 
       if (!userEntity) {
         res.status(400).json({ message: "Usuario não encontrado" })

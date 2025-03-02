@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany, JoinColumn } from "typeorm"
 import { User } from "./Users"
 import { Product } from "./Products"
 import { Movements } from "./Movements"
@@ -14,10 +14,8 @@ export class Branch {
   @Column({ type: "varchar", length: "30", nullable: false })
   document: string
 
-  @Column({ type: "int", nullable: false })
-  userId: number
-
-  @ManyToOne(() => User, (user) => user.branches, { onDelete: "CASCADE" })
+  @ManyToOne(() => User, user => user.id)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @OneToMany(() => Product, (product) => product.branch)
