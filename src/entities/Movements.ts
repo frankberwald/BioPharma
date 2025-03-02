@@ -13,14 +13,21 @@ export class Movements {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Branch, (branch) => branch.movements, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "destination_branch_id" })
+  // @ManyToOne(() => Branch, (branch) => branch.movements, { onDelete: "CASCADE" })
+  // @JoinColumn({ name: "destination_branch_id" })
+  // destinationBranch: Branch;
+
+  // @ManyToOne(() => Product, (product) => product.movements, { onDelete: "CASCADE" })
+  // @JoinColumn({ name: "product_id" })
+  // product: Product;
+
+  @ManyToOne(() => Branch, { eager: true })
+  @JoinColumn({ name: "destinationBranch" })
   destinationBranch: Branch;
 
-  @ManyToOne(() => Product, (product) => product.movements, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "product_id" })
+  @ManyToOne(() => Product, { eager: true })
+  @JoinColumn({ name: "product" })
   product: Product;
-
 
   @Column({ type: "int" })
   quantity: number;
