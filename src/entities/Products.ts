@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
 import { Branch } from "./Branch";
+import { Movements } from "./Movements";
 
 @Entity("products")
 export class Product {
@@ -20,6 +21,9 @@ export class Product {
 
   @Column({ type: "uuid" })
   branch_id: string;
+
+  @OneToMany(() => Movements, (movement) => movement.product)
+  movements: Movements[];
 
   @ManyToOne(() => Branch, (branch) => branch.products, { onDelete: "CASCADE" })
   branch: Branch;
