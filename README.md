@@ -35,11 +35,11 @@ PORT=
    ```
 4. Execute as migrations do TypeORM:
    ```sh
-   npm run typeorm migration:run
+   npm run migration:run
    ```
 5. Inicie o servidor:
    ```sh
-   npm run dev
+   npm run start
    ```
 
 ## 📍 Endpoints
