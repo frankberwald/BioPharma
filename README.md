@@ -22,13 +22,14 @@ BioPharma é uma API desenvolvida em **Node.js** utilizando **Express**, **JWT**
 3. Configure as variáveis de ambiente no arquivo **.env**:
    ```env
    DB_HOST=seu host, se usar localment usar o localhost
-   DB_PORT= a porta que sua API ira rodar
+   DB_PORT= a porta da sua database, para postgres o padrão é: 5432
    DB_USERNAME= nome de usuário sua database
    DB_PASSWORD= senha da sua database
    DB_NAME= nome da database ex: BioPharma, MinhaDatabase....
    NODE_ENV=development   
    JWT_SECRET=seu segredo
    LOG_LEVEL=
+   PORT= porta que sua API ira rodar
 
 PORT=
    ```
