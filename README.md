@@ -190,5 +190,6 @@ Este projeto está licenciado sob a **MIT License**.
 
 👨‍💻 Desenvolvido por
    https://github.com/frankberwald
+<br/>
 📢 Conecte-se
    https://www.linkedin.com/in/franklin-berwald-751a8220a/
