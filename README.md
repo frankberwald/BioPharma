@@ -30,8 +30,6 @@ BioPharma é uma API desenvolvida em **Node.js** utilizando **Express**, **JWT**
    JWT_SECRET=seu segredo
    LOG_LEVEL=
    PORT= porta que sua API ira rodar
-
-PORT=
    ```
 4. Execute as migrations do TypeORM:
    ```sh
