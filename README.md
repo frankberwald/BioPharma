@@ -25,7 +25,7 @@ BioPharma é uma API desenvolvida em **Node.js** utilizando **Express**, **JWT**
    DB_PORT= a porta que sua API ira rodar
    DB_USERNAME= nome de usuário sua database
    DB_PASSWORD= senha da sua database
-   DB_NAME= nome da database ex: postgres, oracle...
+   DB_NAME= nome da database ex: BioPharma, MinhaDatabase....
    NODE_ENV=development   
    JWT_SECRET=seu segredo
    LOG_LEVEL=
