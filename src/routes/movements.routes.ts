@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { MovementsController } from "../controllers/MovementsController";
 import { Request, Response } from "express"
-import { verifyToken } from "../middlewares/auth";
+import { AuthRequest, verifyToken } from "../middlewares/auth";
 import { verifyProfile } from "../middlewares/verifyProfile";
 
 const movementsRouter = Router();
@@ -15,7 +15,7 @@ movementsRouter.get("/", (req: Request, res: Response) => {
   movementController.listMovements(req, res)
 })
 
-movementsRouter.patch("/:id/start", verifyToken, verifyProfile, (req: Request, res: Response) => {
+movementsRouter.patch("/:id/start", verifyToken, verifyProfile, (req: AuthRequest, res: Response) => {
   movementController.updateProgress(req, res)
 })
 
