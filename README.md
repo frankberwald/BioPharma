@@ -21,8 +21,16 @@ BioPharma é uma API desenvolvida em **Node.js** utilizando **Express**, **JWT**
    ```
 3. Configure as variáveis de ambiente no arquivo **.env**:
    ```env
-   DATABASE_URL=postgres://usuario:senha@localhost:5432/biopharma
-   JWT_SECRET=sua-chave-secreta
+   DB_HOST=seu host, se usar localment usar o localhost
+   DB_PORT= a porta que sua API ira rodar
+   DB_USERNAME= nome de usuário sua database
+   DB_PASSWORD= senha da sua database
+   DB_NAME= nome da database ex: postgres, oracle...
+   NODE_ENV=development   
+   JWT_SECRET=seu segredo
+   LOG_LEVEL=
+
+PORT=
    ```
 4. Execute as migrations do TypeORM:
    ```sh
