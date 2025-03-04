@@ -3,12 +3,14 @@ import bcrypt from 'bcrypt';
 import { AppDataSource } from '../data-source';
 import { User } from '../entities/Users';
 
-export interface TokenPayload {
+export interface TokenPayload extends Request {
   userId: number;
   email: string;
   name: string;
   profile: string;
 }
+
+
 
 class AuthService {
   async login(email: string, password: string) {
@@ -47,6 +49,7 @@ class AuthService {
       profile: user.profile,
       token,
     };
+
   }
 }
 

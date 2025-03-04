@@ -1,18 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm"
 import { User } from "./Users";
 
 @Entity("drivers")
 export class Drivers {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: number
 
   @Column({ type: "varchar", length: "255", nullable: false })
   name: string
 
-  @Column({ type: "int", nullable: false })
-  user_id: number
-
-  @ManyToOne(() => User, (user) => user.drivers, { onDelete: "CASCADE" })
+  @ManyToOne(() => User, user => user.id)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })

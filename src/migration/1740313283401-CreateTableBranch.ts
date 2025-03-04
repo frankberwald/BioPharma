@@ -1,5 +1,4 @@
-import { query } from "express";
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableColumn } from "typeorm";
 
 export class CreateTableBranch1740313283401 implements MigrationInterface {
 
@@ -10,10 +9,10 @@ export class CreateTableBranch1740313283401 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "int",
+                        type: "uuid",
                         isPrimary: true,
                         isGenerated: true,
-                        generationStrategy: "increment"
+                        generationStrategy: "uuid"
                     },
                     {
                         name: "full_address",
@@ -55,10 +54,30 @@ export class CreateTableBranch1740313283401 implements MigrationInterface {
                 onDelete: "CASCADE"
             })
         )
+
+        await queryRunner.addColumn(
+            "products",
+            new TableColumn({
+                name: "branch_id",
+                type: "int",
+                isNullable: false
+            })
+        );
+        await queryRunner.createForeignKey(
+            "products",
+            new TableForeignKey({
+                columnNames: ["branch_id"],
+                referencedColumnNames: ["id"],
+                referencedTableName: "branch",
+                onDelete: "CASCADE"
+            })
+        );
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropTable("branch")
+        await queryRunner.dropColumn("products", "branch_id")
     }
 
 }

@@ -19,6 +19,7 @@ export class UserController {
   constructor() {
     this.userRespository = AppDataSource.getRepository(User)
     this.driverRepository = AppDataSource.getRepository(Drivers)
+    this.branchRepository = AppDataSource.getRepository(Branch)
   }
 
   createUser = async (req: Request, res: Response) => {
@@ -33,14 +34,16 @@ export class UserController {
       })
 
       if (userBody.profile == UserProfile.DRIVER) {
-        this.driverRepository.save({
+        await this.driverRepository.save({
           user_id: user.id,
-          document: userBody.document
+          document: userBody.document,
+          name: userBody.name
         })
       } else if (userBody.profile == UserProfile.BRANCH) {
-        this.branchRepository.save({
+        await this.branchRepository.save({
           user_id: user.id,
-          full_address: userBody.full_address
+          full_address: userBody.full_address,
+          document: userBody.document
         })
       }
       res.status(201).json({ message: "Usuário criado com sucesso", user });
@@ -52,32 +55,12 @@ export class UserController {
 
   getAll = async (req: AuthRequest, res: Response) => {
     try {
-      const token = req.headers.authorization?.split(' ')[1];
-      const user = req.userId || req.body;
 
-      if (!token) {
-        return res.status(401).json({ message: 'Token não fornecido' });
-      }
-
-      if (!user) {
-        res.status(401).json({ message: "Usuário não encontrado" })
-      }
-
-      const secret = process.env.JWT_SECRET;
-
-      const decoded = jwt.verify(token, String(secret)) as unknown as TokenPayload;
-
-      if (decoded.profile === 'ADMIN') {
-        const users = await AppDataSource.getRepository(User).find({
-          order: { id: 'ASC' }
-        })
-        res.status(200).json(users);
-        return;
-      } else {
-        return res.status(403).json({ message: 'Acesso negado, você não é ADMIN ou o MOTORISTA correspondente' });
-      }
-
-
+      const users = await AppDataSource.getRepository(User).find({
+        order: { id: 'ASC' }
+      })
+      res.status(200).json(users);
+      return;
 
     } catch (ex) {
       console.error("Erro ao buscar usuários:", ex);
@@ -87,7 +70,8 @@ export class UserController {
 
   getById = async (req: Request, res: Response) => {
     try {
-      const { user } = req.body;
+      const { profile } = req
+      const { user } = req.body
       const { id } = req.params
 
       if (!user) {
@@ -95,7 +79,7 @@ export class UserController {
       }
       let usersReturn;
 
-      if (user.profile == UserProfile.ADMIN) {
+      if (profile == UserProfile.ADMIN) {
         usersReturn = await this.userRespository.findOne({
           where: { id: parseInt(id) },
           relations: ["driver", "branch"],
@@ -108,14 +92,6 @@ export class UserController {
         usersReturn = await this.userRespository.findOne({
           where: { id: user.id },
           relations: ["drivers"]
-        })
-      } else if (user.profile === UserProfile.BRANCH) {
-        if (user.id !== parseInt(id) && !user.driver) {
-          res.status(403).json({ message: "Acesso negado" });
-        }
-        usersReturn = await this.userRespository.findOne({
-          where: { id: parseInt(id) },
-          relations: ["branches", "drivers"]
         })
       } else {
         res.status(403).json({ message: "Acesso negado" })

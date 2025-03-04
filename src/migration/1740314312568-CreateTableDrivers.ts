@@ -12,7 +12,7 @@ export class CreateTableDrivers1740314312568 implements MigrationInterface {
                         type: "int",
                         isPrimary: true,
                         isGenerated: true,
-                        generationStrategy: "increment"
+                        generationStrategy: "uuid"
                     },
                     {
                         name: "full_address",
