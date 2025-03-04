@@ -1,26 +1,26 @@
 import { Router } from "express";
+import express from "express"
 import { MovementsController } from "../controllers/MovementsController";
 import { Request, Response } from "express"
-import { AuthRequest, verifyToken } from "../middlewares/auth";
-import { verifyProfile } from "../middlewares/verifyProfile";
+import { isBranch, isBranchOrDriver, isDriver, verifyToken } from "../middlewares/auth";
 
 const movementsRouter = Router();
 const movementController = new MovementsController()
 
-movementsRouter.post("/", (req: Request, res: Response) => {
-  movementController.createMovement(req, res)
+movementsRouter.post("/", verifyToken as express.RequestHandler, isBranch as express.RequestHandler, (req: Request, res: Response) => {
+  movementController.createMovement;
 })
 
-movementsRouter.get("/", (req: Request, res: Response) => {
-  movementController.listMovements(req, res)
+movementsRouter.get("/", verifyToken as express.RequestHandler, isBranchOrDriver as express.RequestHandler, (req: Request, res: Response) => {
+  movementController.listMovements;
 })
 
-movementsRouter.patch("/:id/start", verifyToken, verifyProfile, (req: AuthRequest, res: Response) => {
-  movementController.updateProgress(req, res)
+movementsRouter.patch("/:id/start", verifyToken as express.RequestHandler, isDriver as express.RequestHandler, (req: Request, res: Response) => {
+  movementController.updateProgress
 })
 
-movementsRouter.patch("/:id/end", (req: Request, res: Response) => {
-  movementController.updateFinished(req, res)
+movementsRouter.patch("/:id/end", verifyToken as express.RequestHandler, isDriver as express.RequestHandler, (req: Request, res: Response) => {
+  movementController.updateFinished
 })
 
 export default movementsRouter;

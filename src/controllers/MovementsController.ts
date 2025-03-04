@@ -35,7 +35,7 @@ export class MovementsController {
 
         const product = await this.productRepository.findOne({
           where: { id: product_id },
-          relations: ["branch"] // Ensure that the branch is loaded
+          relations: ["branch"]
         });
         const destinationBranch = await AppDataSource.getRepository(Branch).findOne({
           where: { id: destination_branch_id }
