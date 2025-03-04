@@ -1,8 +1,7 @@
 import { AppDataSource } from "../data-source";
 import { Request, Response } from "express"
 import { Product } from "../entities/Products";
-import jwt from "jsonwebtoken"
-import { TokenPayload } from "../services/AuthService";
+import { AuthRequest } from "../middlewares/auth";
 
 export class ProductsController {
   private productRepository = AppDataSource.getRepository(Product)
@@ -13,22 +12,11 @@ export class ProductsController {
     this.getAllProducts = this.getAllProducts.bind(this)
   }
 
-  createProduct = async (req: Request, res: Response) => {
+  createProduct = async (req: AuthRequest, res: Response) => {
     try {
-      const token = req.headers.authorization?.split(" ")[1]
+      const { profile } = req
 
-      if (!token) {
-        res.status(401).json({ message: "Token não fornecido" })
-        return
-      }
-      const secret = process.env.JWT_SECRET;
-      const decoded = jwt.verify(token, String(secret)) as TokenPayload
-
-      if (!decoded) {
-        res.status(401).json({ message: "Token inválido" })
-        return
-      }
-      if (decoded.profile !== "BRANCH") {
+      if (profile !== "BRANCH") {
         res.status(403).json({ message: "Acesso negado, apenas filiais podem cadastrar produtos." });
         return
       }
@@ -54,21 +42,8 @@ export class ProductsController {
 
   getAllProducts = async (req: Request, res: Response) => {
     try {
-      const token = req.headers.authorization?.split(" ")[1]
-
-      if (!token) {
-        res.status(401).json({ message: "Token não fornecido" })
-        return
-      }
-
-      const secret = process.env.JWT_SECRET;
-      const decoded = jwt.verify(token, String(secret)) as TokenPayload
-
-      if (!decoded) {
-        res.status(401).json({ message: "Token inválido" })
-      }
-
-      if (decoded.profile === "BRANCH") {
+      const { profile } = req
+      if (profile === "BRANCH") {
         const productsInDB = await AppDataSource.getRepository(Product).find({
           order: { id: 'ASC' },
         })

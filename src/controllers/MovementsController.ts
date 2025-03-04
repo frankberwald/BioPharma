@@ -1,12 +1,11 @@
 import { AppDataSource } from "../data-source";
-import { Request, Response } from "express"
+import { Response } from "express"
 import { Product } from "../entities/Products";
 import { Movements } from "../entities/Movements";
 import { Branch } from "../entities/Branch";
-import jwt from "jsonwebtoken"
-import { TokenPayload } from "../services/AuthService";
 import AppError from "../utils/AppError";
 import { MovementStatus } from "../entities/Movements";
+import { AuthRequest } from "../middlewares/auth";
 
 export class MovementsController {
   private movementRepository = AppDataSource.getRepository(Movements)
@@ -17,22 +16,9 @@ export class MovementsController {
     this.productRepository = AppDataSource.getRepository(Product)
   }
 
-  createMovement = async (req: Request, res: Response) => {
+  createMovement = async (req: AuthRequest, res: Response) => {
     try {
-
-      const token = req.headers.authorization?.split(" ")[1]
-
-      if (!token) {
-        res.status(401).json({ message: "Token não fornecido" })
-        return
-      }
-
-      const secret = process.env.JWT_SECRET;
-      const decoded = jwt.verify(token, String(secret)) as TokenPayload
-
-      if (!decoded) {
-        res.status(401).json({ message: "Token inválido" })
-      }
+      const { profile } = req
 
       const { destination_branch_id, product_id, quantity } = req.body
       if (!destination_branch_id || !product_id || !quantity) {
@@ -45,11 +31,11 @@ export class MovementsController {
         return
       }
 
-      if (decoded.profile === "BRANCH" || decoded.profile === "DRIVER") {
+      if (profile === "BRANCH") {
 
         const product = await this.productRepository.findOne({
           where: { id: product_id },
-          relations: ["branch"] // Ensure that the branch is loaded
+          relations: ["branch"]
         });
         const destinationBranch = await AppDataSource.getRepository(Branch).findOne({
           where: { id: destination_branch_id }
@@ -85,23 +71,11 @@ export class MovementsController {
     }
   }
 
-  listMovements = async (req: Request, res: Response) => {
+  listMovements = async (req: AuthRequest, res: Response) => {
     try {
-      const token = req.headers.authorization?.split(" ")[1]
+      const { profile } = req
 
-      if (!token) {
-        res.status(401).json({ message: "Token não fornecido" })
-        return
-      }
-
-      const secret = process.env.JWT_SECRET;
-      const decoded = jwt.verify(token, String(secret)) as TokenPayload
-
-      if (!decoded) {
-        res.status(401).json({ message: "Token inválido" })
-      }
-
-      if (decoded.profile === "BRANCH" || decoded.profile === "DRIVER") {
+      if (profile === "BRANCH" || profile === "DRIVER") {
         const productsInDB = await AppDataSource.getRepository(Product).find({
           order: { id: 'ASC' },
         })
@@ -115,9 +89,14 @@ export class MovementsController {
     }
   }
 
-  updateProgress = async (req: Request, res: Response) => {
+  updateProgress = async (req: AuthRequest, res: Response) => {
     try {
       const { id } = req.params
+      const { profile } = req
+
+      if (profile !== 'DRIVER') {
+        return res.status(403).json({ message: "Acesso negado: Somente motoristas podem alterar o status." });
+      }
 
       const movementInDB = await this.movementRepository.findOneBy({
         id: parseInt(id)
@@ -140,9 +119,14 @@ export class MovementsController {
     }
   }
 
-  updateFinished = async (req: Request, res: Response) => {
+  updateFinished = async (req: AuthRequest, res: Response) => {
     try {
       const { id } = req.params
+      const { profile } = req
+
+      if (profile !== 'DRIVER') {
+        return res.status(403).json({ message: "Acesso negado: Somente motoristas podem alterar o status." });
+      }
 
       const movementInDB = await this.movementRepository.findOneBy({
         id: parseInt(id)

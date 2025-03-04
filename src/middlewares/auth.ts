@@ -1,30 +1,77 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { NextFunction, Request, Response } from "express";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import AppError from "../utils/AppError";
+
+// Definindo a estrutura dos dados no token JWT
+type dataJwt = JwtPayload & { userId: string; profile: string };
+
 
 export interface AuthRequest extends Request {
   userId: string;
   profile: string;
 }
 
-
-export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.header("Authorization")?.replace("Bearer ", "");
-
-  if (!token) {
-    return res.status(401).json({ message: "Acesso não autorizado: Token não fornecido" });
-  }
-
+export const verifyToken = (
+  req: AuthRequest,
+  _res: Response,
+  next: NextFunction
+) => {
   try {
+    const token = req.headers.authorization?.split(" ")[1] ?? "";
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as { userId: string, profile: string };
+    if (!token) {
+      throw new AppError("Token não informado", 401);
+    }
 
+    const data = jwt.verify(token, process.env.JWT_SECRET ?? "") as dataJwt;
 
-    (req as AuthRequest).userId = decoded.userId;
-    (req as AuthRequest).profile = decoded.profile;
+    req.userId = data.userId;
+    req.profile = data.profile;
 
     next();
   } catch (error) {
-    throw new AppError("Acesso não autorizado, Token Inválido", 401)
+    if (error instanceof Error) {
+      next(new AppError(error.message, 401));
+    } else {
+      next(new AppError("Erro desconhecido", 401));
+    }
   }
+};
+
+export const isAdmin = (req: AuthRequest, res: Response, next: NextFunction) => {
+  if (req.profile !== "ADMIN") {
+    throw new AppError(
+      "Acesso negado: apenas administradores podem acessar esta rota.", 403);
+  }
+  next();
+};
+
+export const isBranch = (req: AuthRequest, res: Response, next: NextFunction) => {
+  if (req.profile !== "BRANCH") {
+    throw new AppError(
+      "Acesso negado: apenas filial podem acessar esta rota.", 403);
+  }
+  next();
+};
+
+export const isDriver = (req: AuthRequest, res: Response, next: NextFunction) => {
+  if (req.profile !== "DRIVER") {
+    throw new AppError(
+      "Acesso negado: apenas motoristas podem acessar esta rota.", 403);
+  }
+  next();
+};
+
+export const isBranchOrDriver = (req: AuthRequest, res: Response, next: NextFunction) => {
+  if (req.profile !== "BRANCH" && req.profile !== "DRIVER") {
+    throw new AppError("Acesso negado: apenas filiais ou motoristas podem acessar esta rota.", 403);
+  }
+  next();
+};
+
+export const isAdminOrDriver = (req: AuthRequest, res: Response, next: NextFunction) => {
+  if (req.profile !== "ADMIN" && req.profile !== "DRIVER") {
+    throw new AppError("Acesso negado: apenas filiais ou motoristas podem acessar esta rota.", 403);
+  }
+  next();
 };

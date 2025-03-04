@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { UserProfile } from "../../src/entities/Users"
+import { UserProfile } from "../../entities/Users"
 
 export interface AuthRequest extends Request {
   userId?: string;
