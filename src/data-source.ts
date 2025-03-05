@@ -13,6 +13,10 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME,
     synchronize: false,
     logging: process.env.NODE_ENV === 'development' ? true : false,
+    "extra": {
+        "connectionTimeoutMillis": 5000,
+        "requestTimeout": 5000
+    },
     entities: [`${__dirname}/entities/*.{ts,js}`],
     migrations: [`${__dirname}/migration/*.{ts,js}`],
     subscribers: [],

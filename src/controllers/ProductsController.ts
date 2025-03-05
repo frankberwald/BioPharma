@@ -14,31 +14,32 @@ export class ProductsController {
 
   createProduct = async (req: AuthRequest, res: Response) => {
     try {
-      const { profile } = req
+      let productsBody = req.body as Product;
 
-      if (profile !== "BRANCH") {
-        res.status(403).json({ message: "Acesso negado, apenas filiais podem cadastrar produtos." });
+      const { name, amount, description, branch_id } = productsBody;
+      if (!name || !amount || !description || !branch_id) {
+        res.status(400).json({ message: "Todos os campos obrigatórios devem ser preenchidos" });
         return
       }
-      let productsBody = req.body as Product
+      console.log("Salvando produto no banco de dados...");
 
-      if (!productsBody.name || !productsBody.amount || !productsBody.description || !productsBody.branch_id) {
-        res.status(400).json({ message: "Todos os campos obrigatórios devem ser preenchidos" })
-        return
-      }
       const product = await this.productRepository.save({
-        name: productsBody.name,
-        amount: productsBody.amount,
-        description: productsBody.description,
+        name,
+        amount,
+        description,
         url_cover: productsBody.url_cover || "",
-        branch_id: productsBody.branch_id
-      })
-      res.status(201).json({ message: "Produto cadastrado com sucesso:", productName: product.name, productAmount: product.amount, branch: product.branch_id })
+        branch_id
+      });
+      res.status(201).json({ message: "Produto cadastrado com sucesso", product });
+      return
 
     } catch (ex) {
-      res.status(500).json({ message: "Erro interno do servidor" });
+      console.error("Erro ao cadastrar produto:", ex);
+      res.status(500).json({ message: "Erro interno do servidor", Error });
+      return
     }
   }
+
 
   getAllProducts = async (req: Request, res: Response) => {
     try {
