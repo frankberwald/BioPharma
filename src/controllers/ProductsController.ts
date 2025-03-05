@@ -35,7 +35,7 @@ export class ProductsController {
 
     } catch (ex) {
       console.error("Erro ao cadastrar produto:", ex);
-      res.status(500).json({ message: "Erro interno do servidor", error: ex.message });
+      res.status(500).json({ message: "Erro interno do servidor", Error });
       return
     }
   }

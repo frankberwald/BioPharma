@@ -273,3 +273,11 @@
 [05-03-2025 10:55:47.359 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
 [05-03-2025 10:55:54.836 AM] info: 	✅ Banco de dados inicializado com sucesso!
 [05-03-2025 10:55:54.842 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 07:14:05.305 PM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 07:14:05.308 PM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 07:15:17.914 PM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 07:15:17.918 PM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 07:15:51.141 PM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 07:15:51.146 PM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 07:16:29.797 PM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 07:16:29.801 PM] info: 	🚀 Servidor rodando em: http://localhost:3000

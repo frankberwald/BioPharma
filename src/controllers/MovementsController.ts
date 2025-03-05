@@ -88,77 +88,73 @@ export class MovementsController {
     }
   }
 
-  updateProgress = async (req: AuthRequest, res: Response) => {
-    try {
-      const { id } = req.params; // O ID da movimentação passado na URL
-      const { userId } = req;    // O ID do usuário do motorista
-
-      // Encontrando o motorista com base no userId
-      const driver = await this.driverRepository.findOne({
-        where: { user: { id: parseInt(userId) } }
-      });
-
-      if (!driver) {
-        return res.status(404).json({ message: "Motorista não encontrado" });
-      }
-
-      // Encontrando a movimentação associada ao motorista
-      const movementInDB = await this.movementRepository.findOne({
-        where: { id: parseInt(id), driver: { id: driver.id } }
-      });
-
-      if (!movementInDB) {
-        return res.status(404).json({ message: "Movimentação não encontrada" });
-      }
-
-      // Verificando o status da movimentação
-      if (movementInDB.status !== MovementStatus.PENDING) {
-        return res.status(400).json({ message: "Somente movimentações pendentes podem ser iniciadas." });
-      }
-
-      // Associando a movimentação ao motorista e alterando o status para IN_PROGRESS
-      movementInDB.status = MovementStatus.IN_PROGRESS;
-      await this.movementRepository.save(movementInDB);
-
-      return res.status(200).json({ message: "Status da movimentação atualizado com sucesso", movementInDB });
-
-    } catch (ex) {
-      console.error(ex);
-      return res.status(500).json({ message: "Erro interno do servidor" });
-    }
-  };
-
-
-  // updateProgress = async (req: Request, res: Response) => {
+  // updateProgressOld = async (req: AuthRequest, res: Response) => {
   //   try {
-  //     const id = req.body
-  //     const userId = Number(req);
+  //     const { id } = req.params;
+  //     const { userId } = req;
 
-  //     const driver = await this.driverRepository.findOneBy({ user_id: userId });
+  //     const driver = await this.driverRepository.findOne({
+  //       where: { user: { id: parseInt(userId) } }
+  //     });
 
   //     if (!driver) {
-  //       return res.status(403).json({ error: "Acesso negado. Apenas motoristas podem atualizar esta movimentação." });
+  //       return res.status(404).json({ message: "Motorista não encontrado" });
   //     }
 
-  //     const movementsInDataBase = await this.movementRepository.findOneBy({ id: Number(id) });
+  //     const movementInDB = await this.movementRepository.findOne({
+  //       where: { id: parseInt(id), driver: { id: driver.id } }
+  //     });
 
-  //     if (!movementsInDataBase) {
-  //       return res.status(404).json({ error: "Movimentação não encontrada." });
+  //     if (!movementInDB) {
+  //       return res.status(404).json({ message: "Movimentação não encontrada" });
   //     }
 
-  //     if (movementsInDataBase.status === "IN_PROGRESS" || movementsInDataBase.status === "FINISHED") {
-  //       return res.status(400).json({ error: "Movimentação já iniciou ou está finalizada." });
+  //     if (movementInDB.status !== MovementStatus.PENDING) {
+  //       return res.status(400).json({ message: "Somente movimentações pendentes podem ser iniciadas." });
   //     }
 
-  //     movementsInDataBase.status = MovementStatus.IN_PROGRESS;
-  //     await this.movementRepository.save(movementsInDataBase);
+  //     movementInDB.status = MovementStatus.IN_PROGRESS;
+  //     await this.movementRepository.save(movementInDB);
 
-  //     return res.status(200).json({ message: "Movimentação atualizada com sucesso!.", movementsInDataBase });
+  //     return res.status(200).json({ message: "Status da movimentação atualizado com sucesso", movementInDB });
 
-  //   } catch (error) {
-  //     return res.status(500).json({ message: "Não foi possível atualizar a movimentação." });
+  //   } catch (ex) {
+  //     console.error(ex);
+  //     return res.status(500).json({ message: "Erro interno do servidor" });
   //   }
   // };
+
+
+  updateProgress = async (req: Request, res: Response) => {
+    try {
+      const id = req.body
+      const userId = Number(req);
+
+      const driver = await this.driverRepository.findOneBy({ user_id: userId });
+
+      if (!driver) {
+        return res.status(403).json({ error: "Acesso negado. Apenas motoristas podem atualizar esta movimentação." });
+      }
+
+      const movementsInDataBase = await this.movementRepository.findOneBy({ id: Number(id) });
+
+      if (!movementsInDataBase) {
+        return res.status(404).json({ error: "Movimentação não encontrada." });
+      }
+
+      if (movementsInDataBase.status === MovementStatus.IN_PROGRESS || movementsInDataBase.status === MovementStatus.FINISHED) {
+        return res.status(400).json({ error: "Movimentação já iniciou ou está finalizada." });
+      }
+
+      movementsInDataBase.status = MovementStatus.IN_PROGRESS;
+      await this.movementRepository.save(movementsInDataBase);
+
+      return res.status(200).json({ message: "Movimentação atualizada com sucesso!.", movementsInDataBase });
+
+    } catch (error) {
+      return res.status(500).json({ message: "Não foi possível atualizar a movimentação." });
+    }
+  };
 
 
   updateFinished = async (req: AuthRequest, res: Response) => {
