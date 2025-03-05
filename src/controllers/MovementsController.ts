@@ -78,69 +78,89 @@ export class MovementsController {
   listMovements = async (req: AuthRequest, res: Response) => {
     try {
       const { profile } = req
-
-      if (profile === "BRANCH" || profile === "DRIVER") {
-        const productsInDB = await AppDataSource.getRepository(Product).find({
-          order: { id: 'ASC' },
-        })
-        return res.status(200).json({ message: "Produtos:", productsInDB })
-      } else {
-        res.status(403).json({ message: "Você não tem permissão para acessar esses dados." })
-      }
+      const movementsInDB = await AppDataSource.getRepository(Movements).find({
+        order: { id: 'ASC' },
+      })
+      return res.status(200).json({ message: "Movimentações:", movementsInDB })
 
     } catch (ex) {
       res.status(500).json({ message: "Erro interno do servidor" });
     }
   }
 
-  updateProgress = async (req: AuthRequest, res: Response) => {
+  // updateProgressOld = async (req: AuthRequest, res: Response) => {
+  //   try {
+  //     const { id } = req.params;
+  //     const { userId } = req;
+
+  //     const driver = await this.driverRepository.findOne({
+  //       where: { user: { id: parseInt(userId) } }
+  //     });
+
+  //     if (!driver) {
+  //       return res.status(404).json({ message: "Motorista não encontrado" });
+  //     }
+
+  //     const movementInDB = await this.movementRepository.findOne({
+  //       where: { id: parseInt(id), driver: { id: driver.id } }
+  //     });
+
+  //     if (!movementInDB) {
+  //       return res.status(404).json({ message: "Movimentação não encontrada" });
+  //     }
+
+  //     if (movementInDB.status !== MovementStatus.PENDING) {
+  //       return res.status(400).json({ message: "Somente movimentações pendentes podem ser iniciadas." });
+  //     }
+
+  //     movementInDB.status = MovementStatus.IN_PROGRESS;
+  //     await this.movementRepository.save(movementInDB);
+
+  //     return res.status(200).json({ message: "Status da movimentação atualizado com sucesso", movementInDB });
+
+  //   } catch (ex) {
+  //     console.error(ex);
+  //     return res.status(500).json({ message: "Erro interno do servidor" });
+  //   }
+  // };
+
+
+  updateProgress = async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      const { profile, userId } = req;
+      const id = req.body
+      const userId = Number(req);
 
-      if (profile !== UserProfile.DRIVER) {
-        return res.status(403).json({ message: "Acesso negado: Somente motoristas podem alterar o status." });
-      }
-
-      const driver = await this.driverRepository.findOne({
-        where: { user: { id: parseInt(userId) } }
-      });
+      const driver = await this.driverRepository.findOneBy({ user_id: userId });
 
       if (!driver) {
-        return res.status(404).json({ message: "Motorista não encontrado" });
+        return res.status(403).json({ error: "Acesso negado. Apenas motoristas podem atualizar esta movimentação." });
       }
 
-      const movementInDB = await this.movementRepository.findOne({
-        where: { id: parseInt(id), driver: { id: driver.id } }
-      });
+      const movementsInDataBase = await this.movementRepository.findOneBy({ id: Number(id) });
 
-      if (!movementInDB) {
-        return res.status(404).json({ message: "Movimentação não encontrada" });
+      if (!movementsInDataBase) {
+        return res.status(404).json({ error: "Movimentação não encontrada." });
       }
 
-      if (movementInDB.status !== MovementStatus.PENDING) {
-        return res.status(400).json({ message: "Somente movimentações pendentes podem ser iniciadas." });
+      if (movementsInDataBase.status === MovementStatus.IN_PROGRESS || movementsInDataBase.status === MovementStatus.FINISHED) {
+        return res.status(400).json({ error: "Movimentação já iniciou ou está finalizada." });
       }
 
-      movementInDB.status = MovementStatus.IN_PROGRESS;
-      await this.movementRepository.save(movementInDB);
+      movementsInDataBase.status = MovementStatus.IN_PROGRESS;
+      await this.movementRepository.save(movementsInDataBase);
 
-      res.status(200).json({ message: "Status da movimentação atualizado com sucesso" });
+      return res.status(200).json({ message: "Movimentação atualizada com sucesso!.", movementsInDataBase });
 
-    } catch (ex) {
-      console.error(ex);
-      res.status(500).json({ message: "Erro interno do servidor" });
+    } catch (error) {
+      return res.status(500).json({ message: "Não foi possível atualizar a movimentação." });
     }
   };
+
 
   updateFinished = async (req: AuthRequest, res: Response) => {
     try {
       const { id } = req.params
-      const { profile, userId } = req
-
-      if (profile !== 'DRIVER') {
-        return res.status(403).json({ message: "Acesso negado: Somente motoristas podem alterar o status." });
-      }
+      const { userId } = req
 
       const driver = await this.driverRepository.findOne({
         where: { user: { id: Number(userId) } }
@@ -159,14 +179,16 @@ export class MovementsController {
         throw new AppError("Movimentação não encontrada", 404)
       }
 
-      if (movementInDB.status === "IN_PROGRESS" || movementInDB.status === "FINISHED") {
-        res.status(400).json({ message: "Movimentação já está em andamento ou finalizada" });
-        return
+      if (movementInDB.status === MovementStatus.IN_PROGRESS || movementInDB.status === MovementStatus.FINISHED) {
+        return res.status(400).json({ message: "Movimentação já está em andamento ou finalizada" });
       }
-      if (movementInDB.status === MovementStatus.PENDING || movementInDB.status === MovementStatus.FINISHED) {
-        res.status(400).json({ message: "Somente movimentações em andamento podem ser finalizadas." });
-        return
+
+      if (movementInDB.status === MovementStatus.PENDING) {
+        movementInDB.status = MovementStatus.FINISHED;
+        await this.movementRepository.save(movementInDB);
+        return res.status(200).json({ message: "Movimentação finalizada com sucesso" });
       }
+
 
       movementInDB.status = MovementStatus.FINISHED
       await this.movementRepository.save(movementInDB)

@@ -21,6 +21,12 @@ export class CreateUser1740013691772 implements MigrationInterface {
                         isNullable: false
                     },
                     {
+                        name: "document",
+                        type: "varchar",
+                        length: "20",
+                        isNullable: false,
+                    },
+                    {
                         name: "profile",
                         type: "enum",
                         enum: ['DRIVER', 'BRANCH', 'ADMIN'],

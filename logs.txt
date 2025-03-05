@@ -141,4 +141,143 @@
 [04-03-2025 11:13:44.977 PM] info: 	O servidor está rodando em http://localhost:3000
 [05-03-2025 07:45:49.118 AM] info: 	O servidor está rodando em http://localhost:3000
 [05-03-2025 07:46:37.883 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
-[05-03-2025 07:47:29.904 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 07:47:29.904 AM] info: 	✅ Banco de dados inicializado com sucesso![05-03-2025 08:20:20.469 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:20:20.473 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:20:51.048 AM] error: 	❌ Erro ao iniciar o banco de dados: a coluna "name" da relação "users" contém valores nulos
+[05-03-2025 08:21:44.164 AM] error: 	❌ Erro ao iniciar o banco de dados: a coluna "name" da relação "users" contém valores nulos
+[05-03-2025 08:23:41.248 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:23:41.252 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:24:18.779 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:24:18.783 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:25:55.560 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:25:55.565 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:26:42.033 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:26:42.037 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:27:07.121 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:27:07.125 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:27:36.290 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:27:36.295 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:27:51.393 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:27:51.397 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:31:51.583 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:31:51.586 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:34:55.643 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:34:55.647 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:47:03.162 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:47:03.166 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:51:52.541 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:51:52.545 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:51:58.370 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:51:58.375 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:53:17.114 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:53:17.118 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:54:43.770 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:54:43.774 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:54:52.768 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:54:52.772 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 08:56:08.807 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 08:56:08.812 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:00:19.762 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:00:19.767 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:00:28.623 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:00:28.626 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:06:34.697 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:06:34.702 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:07:50.548 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:07:50.552 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:08:18.676 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:08:18.680 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:08:46.916 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:08:46.919 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:12:47.264 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:12:47.267 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:12:58.291 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:12:58.294 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:13:43.072 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:13:43.076 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:17:24.709 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:17:24.714 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:17:44.120 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:17:44.124 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:19:07.193 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:19:07.196 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:19:26.665 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:19:26.669 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:25:57.759 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:25:57.763 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:27:43.955 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:27:43.960 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:28:30.161 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:28:30.164 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:29:56.325 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:29:56.329 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:30:54.881 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:30:54.885 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:32:27.992 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:32:27.997 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:34:29.430 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:34:29.434 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:35:12.656 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:35:12.661 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:36:09.130 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:36:09.135 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:36:52.031 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:36:52.035 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:37:25.509 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:37:25.514 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:37:39.584 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:37:39.587 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:37:59.192 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:37:59.196 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:44:33.815 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:44:33.818 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:44:56.277 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:44:56.281 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:48:41.646 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:48:41.650 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:50:15.981 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:50:15.986 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:50:34.488 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:50:34.493 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:50:42.570 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:50:42.575 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:56:14.828 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:56:14.832 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:56:33.299 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:56:33.303 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 09:59:32.012 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 09:59:32.018 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:03:30.318 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:03:30.322 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:09:36.825 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:09:36.828 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:09:42.199 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:09:42.203 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:11:13.253 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:11:13.257 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:12:59.305 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:12:59.310 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:14:26.824 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:14:26.828 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:54:12.022 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:54:12.026 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:54:18.567 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:54:18.571 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:54:47.361 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:54:47.366 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:55:03.062 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:55:03.066 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:55:38.960 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:55:38.964 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:55:47.355 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:55:47.359 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 10:55:54.836 AM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 10:55:54.842 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 07:14:05.305 PM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 07:14:05.308 PM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 07:15:17.914 PM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 07:15:17.918 PM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 07:15:51.141 PM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 07:15:51.146 PM] info: 	🚀 Servidor rodando em: http://localhost:3000
+[05-03-2025 07:16:29.797 PM] info: 	✅ Banco de dados inicializado com sucesso!
+[05-03-2025 07:16:29.801 PM] info: 	🚀 Servidor rodando em: http://localhost:3000

@@ -70,34 +70,39 @@ export class UserController {
 
   getById = async (req: Request, res: Response) => {
     try {
-      const { profile } = req
-      const { user } = req.body
+      const { profile, userId } = req
       const { id } = req.params
 
-      if (!user) {
+      if (!userId) {
         res.status(401).json({ message: "Usuário não encontrado" })
+        return
       }
       let usersReturn;
 
       if (profile == UserProfile.ADMIN) {
         usersReturn = await this.userRespository.findOne({
-          where: { id: parseInt(id) },
-          relations: ["driver", "branch"],
+          where: { id: Number(userId) },
+          relations: ["drivers", "branches"],
         })
-      } else if (user.profile === UserProfile.DRIVER) {
-        if (user.id !== parseInt(id)) {
+      }
+
+      else if (profile === UserProfile.DRIVER) {
+        if (Number(userId) !== parseInt(id)) {
           res.status(403).json({ message: "Acesso negado" })
+          return
         }
 
         usersReturn = await this.userRespository.findOne({
-          where: { id: user.id },
+          where: { id: Number(userId) },
           relations: ["drivers"]
         })
       } else {
         res.status(403).json({ message: "Acesso negado" })
+        return
       }
       if (!usersReturn) {
         res.status(404).json({ message: "Usuário não encontrado" });
+        return
       }
 
       res.status(200).json(usersReturn)
@@ -105,6 +110,7 @@ export class UserController {
     } catch (ex) {
       console.error("Erro ao buscar usuário:", ex);
       res.status(500).json({ message: "Erro interno do servidor" })
+      return
     }
   }
 
@@ -122,15 +128,17 @@ export class UserController {
 
       if (!userInDB) {
         throw new AppError("Usuário não encontrado", 404)
-      } else {
-        Object.assign(userInDB, body)
-        await this.userRespository.save(userInDB)
-        res.status(200).json(userInDB)
       }
+      console.log("Dados a serem atualizados:", body);
+      console.log("Usuário atual:", userInDB);
+      Object.assign(userInDB, body)
+      await this.userRespository.save(userInDB)
+      res.status(200).json(userInDB)
 
     } catch (ex) {
       res.status(500).json({ message: "Erro interno do servidor" })
-      next(Error)
+      next()
+      return
     }
   }
 
