@@ -9,6 +9,7 @@ type dataJwt = JwtPayload & { userId: string; profile: string };
 export interface AuthRequest extends Request {
   userId: string;
   profile: string;
+  params: { id: string };
 }
 
 export const verifyToken = (

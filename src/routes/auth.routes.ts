@@ -1,13 +1,16 @@
-import Router from "express";
+import { Router } from "express";
 import { AuthController } from "../controllers/AuthController";
-import { Request, Response } from "express"
+import { Request, Response } from "express";
 
 const authRouter = Router();
+const authController = new AuthController();
 
-const authController = new AuthController()
-
-authRouter.post("/", (req: Request, res: Response) => {
-  authController.login(req, res)
-})
+authRouter.post("/", async (req: Request, res: Response) => {
+  try {
+    await authController.login(req, res);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao realizar login", error });
+  }
+});
 
 export default authRouter;

@@ -10,6 +10,9 @@ export class Drivers {
   @Column({ type: "varchar", length: "255", nullable: false })
   name: string
 
+  @Column({ type: "varchar", length: "20", nullable: false })
+  document: string
+
   @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: 'user_id' })
   user: User;
