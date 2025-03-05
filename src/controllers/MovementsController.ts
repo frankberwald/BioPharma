@@ -6,14 +6,18 @@ import { Branch } from "../entities/Branch";
 import AppError from "../utils/AppError";
 import { MovementStatus } from "../entities/Movements";
 import { AuthRequest } from "../middlewares/auth";
+import { UserProfile } from "../entities/Users";
+import { Drivers } from "../entities/Drivers";
 
 export class MovementsController {
   private movementRepository = AppDataSource.getRepository(Movements)
   private productRepository = AppDataSource.getRepository(Product)
+  private driverRepository = AppDataSource.getRepository(Drivers)
 
   constructor() {
     this.movementRepository = AppDataSource.getRepository(Movements)
     this.productRepository = AppDataSource.getRepository(Product)
+    this.driverRepository = AppDataSource.getRepository(Drivers)
   }
 
   createMovement = async (req: AuthRequest, res: Response) => {
@@ -91,16 +95,65 @@ export class MovementsController {
 
   updateProgress = async (req: AuthRequest, res: Response) => {
     try {
+      const { id } = req.params;
+      const { profile, userId } = req;
+
+      if (profile !== UserProfile.DRIVER) {
+        return res.status(403).json({ message: "Acesso negado: Somente motoristas podem alterar o status." });
+      }
+
+      const driver = await this.driverRepository.findOne({
+        where: { user: { id: parseInt(userId) } }
+      });
+
+      if (!driver) {
+        return res.status(404).json({ message: "Motorista não encontrado" });
+      }
+
+      const movementInDB = await this.movementRepository.findOne({
+        where: { id: parseInt(id), driver: { id: driver.id } }
+      });
+
+      if (!movementInDB) {
+        return res.status(404).json({ message: "Movimentação não encontrada" });
+      }
+
+      if (movementInDB.status !== MovementStatus.PENDING) {
+        return res.status(400).json({ message: "Somente movimentações pendentes podem ser iniciadas." });
+      }
+
+      movementInDB.status = MovementStatus.IN_PROGRESS;
+      await this.movementRepository.save(movementInDB);
+
+      res.status(200).json({ message: "Status da movimentação atualizado com sucesso" });
+
+    } catch (ex) {
+      console.error(ex);
+      res.status(500).json({ message: "Erro interno do servidor" });
+    }
+  };
+
+  updateFinished = async (req: AuthRequest, res: Response) => {
+    try {
       const { id } = req.params
-      const { profile } = req
+      const { profile, userId } = req
 
       if (profile !== 'DRIVER') {
         return res.status(403).json({ message: "Acesso negado: Somente motoristas podem alterar o status." });
       }
 
-      const movementInDB = await this.movementRepository.findOneBy({
-        id: parseInt(id)
-      })
+      const driver = await this.driverRepository.findOne({
+        where: { user: { id: Number(userId) } }
+      });
+
+      if (!driver) {
+        res.status(404).json({ message: "Motorista não encontrado" });
+        return
+      }
+
+      const movementInDB = await this.movementRepository.findOne({
+        where: { id: parseInt(id), driver: { id: driver.id } }
+      });
 
       if (!movementInDB) {
         throw new AppError("Movimentação não encontrada", 404)
@@ -110,41 +163,20 @@ export class MovementsController {
         res.status(400).json({ message: "Movimentação já está em andamento ou finalizada" });
         return
       }
-
-      movementInDB.status = MovementStatus.IN_PROGRESS
-      await this.movementRepository.save(movementInDB)
-
-    } catch (ex) {
-      res.status(500).json({ message: "Erro interno do servidor" });
-    }
-  }
-
-  updateFinished = async (req: AuthRequest, res: Response) => {
-    try {
-      const { id } = req.params
-      const { profile } = req
-
-      if (profile !== 'DRIVER') {
-        return res.status(403).json({ message: "Acesso negado: Somente motoristas podem alterar o status." });
-      }
-
-      const movementInDB = await this.movementRepository.findOneBy({
-        id: parseInt(id)
-      })
-
-      if (!movementInDB) {
-        throw new AppError("Movimentação não encontrada", 404)
-      }
-
-      if (movementInDB.status === "IN_PROGRESS" || movementInDB.status === "FINISHED") {
-        res.status(400).json({ message: "Movimentação já está em andamento ou finalizada" });
+      if (movementInDB.status === MovementStatus.PENDING || movementInDB.status === MovementStatus.FINISHED) {
+        res.status(400).json({ message: "Somente movimentações em andamento podem ser finalizadas." });
         return
       }
 
       movementInDB.status = MovementStatus.FINISHED
       await this.movementRepository.save(movementInDB)
+      res.status(200).json({ message: "Movimentação finalizada com sucesso" });
 
     } catch (ex) {
+      if (ex instanceof AppError) {
+        res.status(ex.statusCode).json({ message: ex.message })
+        return
+      }
       res.status(500).json({ message: "Erro interno do servidor" });
     }
   }
