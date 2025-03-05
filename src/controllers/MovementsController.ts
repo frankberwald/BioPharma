@@ -6,7 +6,6 @@ import { Branch } from "../entities/Branch";
 import AppError from "../utils/AppError";
 import { MovementStatus } from "../entities/Movements";
 import { AuthRequest } from "../middlewares/auth";
-import { UserProfile } from "../entities/Users";
 import { Drivers } from "../entities/Drivers";
 
 export class MovementsController {
