@@ -9,7 +9,7 @@ const userController = new UserController()
 
 const userRouter = Router();
 
-userRouter.post("/", verifyToken as express.RequestHandler, isAdmin as express.RequestHandler, (req: Request, res: Response) => {
+userRouter.post("/", (req: Request, res: Response) => {
   userController.createUser
 });
 

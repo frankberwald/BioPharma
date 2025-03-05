@@ -142,4 +142,3 @@
 [05-03-2025 07:45:49.118 AM] info: 	O servidor está rodando em http://localhost:3000
 [05-03-2025 07:46:37.883 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
 [05-03-2025 07:47:29.904 AM] info: 	✅ Banco de dados inicializado com sucesso!
-[05-03-2025 07:47:29.909 AM] info: 	🚀 Servidor rodando em: http://localhost:3000
