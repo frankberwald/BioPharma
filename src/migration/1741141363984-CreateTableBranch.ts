@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class CreateDrivers1740099529062 implements MigrationInterface {
+export class CreateBranches1740098944334 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "drivers",
+                name: "branches",
                 columns: [
                     {
                         name: "id",
@@ -45,15 +45,15 @@ export class CreateDrivers1740099529062 implements MigrationInterface {
             true,
         );
 
-        await queryRunner.createForeignKey("drivers", new TableForeignKey({
+        await queryRunner.createForeignKey("branches", new TableForeignKey({
             columnNames: ["user_id"],
             referencedTableName: "users",
             referencedColumnNames: ["id"],
         }))
     }
 
-
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("drivers");
+        await queryRunner.dropTable("branches");
     }
+
 }

@@ -1,6 +1,6 @@
-import { MigrationInterface, QueryRunner, TableForeignKey, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class CreateTableProducts1740781191772 implements MigrationInterface {
+export class CreateProducts1740613443870 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -9,65 +9,63 @@ export class CreateTableProducts1740781191772 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
+                        type: "int",
                         isGenerated: true,
-                        generationStrategy: "uuid"
+                        isPrimary: true,
+                        generationStrategy: "increment"
                     },
                     {
                         name: "name",
                         type: "varchar",
-                        length: "255",
-                        isNullable: false
+                        length: "200",
+                        isNullable: false,
                     },
                     {
                         name: "amount",
                         type: "int",
-                        isNullable: false
+                        isNullable: false,
                     },
                     {
                         name: "description",
                         type: "varchar",
                         length: "200",
-                        isNullable: false
+                        isNullable: false,
                     },
                     {
                         name: "url_cover",
                         type: "varchar",
                         length: "200",
-                        isNullable: false
+                        isNullable: false,
                     },
                     {
                         name: "branch_id",
-                        type: "uuid",
+                        type: "int",
                         isNullable: false,
                     },
                     {
                         name: "created_at",
                         type: "timestamp",
-                        default: "CURRENT_TIMESTAMP",
+                        default: "now()",
                     },
                     {
                         name: "updated_at",
                         type: "timestamp",
-                        default: "CURRENT_TIMESTAMP",
-                    }
-                ]
-            })
-        )
-        await queryRunner.createForeignKey(
-            "products",
-            new TableForeignKey({
-                columnNames: ["branch_id"],
-                referencedColumnNames: ["id"],
-                referencedTableName: "branch",
-                onDelete: "CASCADE"
-            })
-        )
+                        default: "now()",
+                    },
+                ],
+            }),
+            true,
+        );
+
+        await queryRunner.createForeignKey("products", new TableForeignKey({
+            columnNames: ["branch_id"],
+            referencedTableName: "branches",
+            referencedColumnNames: ["id"],
+        }))
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("products")
+        await queryRunner.dropTable("products");
     }
 
 }
