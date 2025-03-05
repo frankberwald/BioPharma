@@ -37,10 +37,11 @@ app.use(handleError);
 
 AppDataSource.initialize()
   .then(() => {
-    app.listen(process.env.PORT, () => {
-      logger.info(
-        `O servidor está rodando em http://localhost:${process.env.PORT}`
-      );
+    logger.info("✅ Banco de dados inicializado com sucesso!");
+
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+      logger.info(`🚀 Servidor rodando em: http://localhost:${port}`);
     });
   })
-  .catch((error) => console.log(error));
+  .catch((error) => logger.error("❌ Erro ao iniciar o banco de dados:", error));
