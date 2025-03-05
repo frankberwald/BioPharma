@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class CreateTableMovements1740924675100 implements MigrationInterface {
+export class CreateMovements1740868364932 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -9,70 +9,73 @@ export class CreateTableMovements1740924675100 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
+                        type: "int",
                         isGenerated: true,
-                        generationStrategy: "uuid"
+                        isPrimary: true,
+                        generationStrategy: "increment"
+                    },
+                    {
+                        name: "destination_branch_id",
+                        type: "int",
+                        isNullable: false,
+                    },
+                    {
+                        name: "product_id",
+                        type: "int",
+                        isNullable: false,
+                    },
+                    {
+                        name: "driver_id",
+                        type: "int",
+                        isNullable: true,
                     },
                     {
                         name: "quantity",
                         type: "int",
-                        isNullable: false
-                    },
-                    {
-                        name: "destination_branch_id",
-                        type: "uuid",
-                        isNullable: false
-                    },
-                    {
-                        name: "product_id",
-                        type: "uuid",
-                        isNullable: false
-                    },
-                    {
-                        name: "created_at",
-                        type: "timestamp",
-                        default: "CURRENT_TIMESTAMP",
+                        isNullable: false,
                     },
                     {
                         name: "status",
                         type: "enum",
                         enum: ["PENDING", "IN_PROGRESS", "FINISHED"],
-                        isNullable: false,
-                        default: "PENDING"
+                        default: "'PENDING'",
+                    },
+                    {
+                        name: "created_at",
+                        type: "timestamp",
+                        default: "now()",
                     },
                     {
                         name: "updated_at",
                         type: "timestamp",
-                        default: "CURRENT_TIMESTAMP",
-                    }
-                ]
-            })
-        )
+                        default: "now()",
+                    },
+                ],
+            }),
+            true,
+        );
 
-        await queryRunner.createForeignKey(
-            "movements",
-            new TableForeignKey({
-                columnNames: ["destination_branch_id"],
-                referencedTableName: "branch",
-                referencedColumnNames: ["id"],
-                onDelete: "Cascade",
-            })
-        )
+        await queryRunner.createForeignKey("movements", new TableForeignKey({
+            columnNames: ["destination_branch_id"],
+            referencedTableName: "branches",
+            referencedColumnNames: ["id"],
+        }))
 
-        await queryRunner.createForeignKey(
-            "movements",
-            new TableForeignKey({
-                columnNames: ["product_id"],
-                referencedColumnNames: ["id"],
-                referencedTableName: "products",
-                onDelete: "CASCADE"
-            })
-        )
+        await queryRunner.createForeignKey("movements", new TableForeignKey({
+            columnNames: ["product_id"],
+            referencedTableName: "products",
+            referencedColumnNames: ["id"],
+        }))
+
+        await queryRunner.createForeignKey("movements", new TableForeignKey({
+            columnNames: ["driver_id"],
+            referencedTableName: "drivers",
+            referencedColumnNames: ["id"],
+        }))
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("movements")
+        await queryRunner.dropTable("movements");
     }
 
 }

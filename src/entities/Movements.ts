@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from "typeorm";
 import { Branch } from "./Branch";
 import { Product } from "./Products";
+import { Drivers } from "./Drivers";
 
 export enum MovementStatus {
   PENDING = "PENDING",
@@ -10,7 +11,7 @@ export enum MovementStatus {
 
 @Entity("movements")
 export class Movements {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Branch, { eager: true })
@@ -26,6 +27,10 @@ export class Movements {
 
   @Column({ type: "enum", enum: MovementStatus, default: MovementStatus.PENDING })
   status: MovementStatus
+
+  @ManyToOne(() => Drivers, driver => driver.movements)
+  @JoinColumn({ name: 'driver_id' })
+  driver: Drivers;
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;

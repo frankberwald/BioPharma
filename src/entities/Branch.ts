@@ -5,7 +5,7 @@ import { Movements } from "./Movements"
 
 @Entity("branch")
 export class Branch {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: number
 
   @Column({ type: "varchar", length: "255", nullable: false })

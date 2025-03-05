@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateTableUser1740312716978 implements MigrationInterface {
+export class CreateUser1740013691772 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -9,58 +9,57 @@ export class CreateTableUser1740312716978 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
+                        type: "int",
                         isGenerated: true,
-                        generationStrategy: "uuid"
+                        isPrimary: true,
+                        generationStrategy: "increment"
                     },
                     {
                         name: "name",
                         type: "varchar",
-                        length: "255",
+                        length: "200",
                         isNullable: false
                     },
                     {
                         name: "profile",
                         type: "enum",
-                        enum: ["DRIVER", "BRANCH", "ADMIN"],
-                        isNullable: false
+                        enum: ['DRIVER', 'BRANCH', 'ADMIN'],
+                        isNullable: false,
                     },
                     {
                         name: "email",
                         type: "varchar",
                         length: "150",
                         isNullable: false,
-                        isUnique: true
                     },
                     {
                         name: "password_hash",
                         type: "varchar",
                         length: "150",
-                        isNullable: false
+                        isNullable: false,
                     },
                     {
                         name: "status",
                         type: "boolean",
-                        default: true
+                        default: true,
                     },
                     {
                         name: "created_at",
                         type: "timestamp",
-                        default: "CURRENT_TIMESTAMP",
+                        default: "now()",
                     },
                     {
                         name: "updated_at",
                         type: "timestamp",
-                        default: "CURRENT_TIMESTAMP",
-                    }
-                ]
-            })
-        )
+                        default: "now()",
+                    },
+                ],
+            }),
+            true,
+        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("users")
+        await queryRunner.dropTable("users");
     }
-
 }

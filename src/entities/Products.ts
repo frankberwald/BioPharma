@@ -4,7 +4,7 @@ import { Movements } from "./Movements";
 
 @Entity("products")
 export class Product {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: "varchar", length: 255 })
